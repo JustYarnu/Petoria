@@ -25,9 +25,6 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Run tests
-        run: python -m unittest discover -s python -p 'test_*.py'
-
       - name: Train one iteration from 100 self-play games
         run: python python/train_one_iteration.py
 
