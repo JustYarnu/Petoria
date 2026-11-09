@@ -1,0 +1,235 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", sans-serif;
+  color: #24231f;
+  background: #f5f2eb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 32px 20px;
+}
+
+.game {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.game-mode {
+  margin: 0 0 2px;
+  color: #655d50;
+  font-weight: 600;
+}
+
+.play-area {
+  display: grid;
+  grid-template-columns: minmax(0, 540px) minmax(150px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  width: 100%;
+  padding: 5.5%;
+  aspect-ratio: 1;
+  border: 1px solid #b68b4d;
+  border-radius: 4px;
+  background: #d9b477;
+  box-shadow: 0 10px 24px rgb(52 40 20 / 12%);
+}
+
+.intersection {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.intersection::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(#584a35, #584a35) center / 1px 100% no-repeat,
+    linear-gradient(#584a35, #584a35) center / 100% 1px no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.intersection::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 76%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.intersection[data-player="black"]::after {
+  background: radial-gradient(circle at 35% 30%, #555, #171717 65%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 45%);
+}
+
+.intersection[data-player="white"]::after {
+  background: radial-gradient(circle at 35% 30%, #fff, #e8e5de 70%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 30%);
+}
+
+.intersection[data-last-move="true"]::after {
+  outline: 3px solid #df672e;
+  outline-offset: 2px;
+}
+
+.game-info {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.game-status {
+  margin: 0;
+  color: #655d50;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.move-indicator {
+  margin: 0;
+  font-weight: 600;
+}
+
+.replay-position {
+  display: grid;
+  gap: 6px;
+}
+
+#replay-slider {
+  width: 100%;
+  margin: 0;
+  accent-color: #72552b;
+}
+
+.thinking-panel {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #ded7ca;
+  border-radius: 6px;
+  background: rgb(255 253 248 / 75%);
+}
+
+.thinking-panel h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.thinking-stats {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.thinking-stats div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.thinking-stats dt {
+  color: #655d50;
+  font-size: 0.85rem;
+}
+
+.thinking-stats dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.capture-counts p {
+  margin: 0 0 8px;
+  color: #4b463d;
+  font-size: 0.95rem;
+}
+
+.replay-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.replay-controls button {
+  min-height: 38px;
+  min-width: 0;
+  padding: 7px 4px;
+  border: 1px solid #b9b2a5;
+  border-radius: 5px;
+  background: #fffdf8;
+  color: #292720;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.replay-controls button[aria-label="Previous move"],
+.replay-controls button[aria-label="Next move"] {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.replay-controls button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.replay-controls button:focus-visible,
+#replay-slider:focus-visible {
+  outline: 3px solid #2563a6;
+  outline-offset: 2px;
+}
+
+@media (max-width: 620px) {
+  body {
+    padding: 22px 14px;
+  }
+
+  .play-area {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .board {
+    max-width: 540px;
+  }
+
+  .game-info {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 8px 16px;
+  }
+
+  .thinking-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

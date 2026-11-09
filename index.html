@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/go-engine.js"></script>
+    <script defer src="js/app.js"></script>
+  </head>
+  <body>
+    <main class="game">
+
+      <section class="play-area" aria-label="Go self-play board">
+        <div id="board" class="board" role="img" aria-label="Empty 9 by 9 Go board"></div>
+        <aside class="game-info" aria-label="Self-play status">
+          <p id="game-status" class="game-status" role="status" aria-live="polite"></p>
+          <section class="replay-position" aria-label="Replay position">
+            <p id="iteration-label" class="move-indicator"></p>
+            <input id="replay-slider" type="range" min="0" max="0" value="0" step="1" aria-label="Replay progress" disabled>
+          </section>
+          <section class="thinking-panel" aria-label="Model thinking for selected move">
+            <h2>Model thinking</h2>
+            <dl class="thinking-stats">
+              <div>
+                <dt>Chosen action probability</dt>
+                <dd id="thinking-probability">—</dd>
+              </div>
+              <div>
+                <dt>Value estimate (for mover)</dt>
+                <dd id="thinking-value">—</dd>
+              </div>
+              <div>
+                <dt>Policy entropy</dt>
+                <dd id="thinking-entropy">—</dd>
+              </div>
+              <div>
+                <dt>Legal choices (incl. pass)</dt>
+                <dd id="thinking-legal-actions">—</dd>
+              </div>
+            </dl>
+          </section>
+          <div class="capture-counts" aria-label="Captured stones">
+            <p id="black-captures"></p>
+            <p id="white-captures"></p>
+          </div>
+          <div class="replay-controls" aria-label="Replay controls">
+            <button id="previous-button" type="button" aria-label="Previous move" disabled>‹</button>
+            <button id="play-button" type="button" aria-pressed="false" disabled>Play</button>
+            <button id="next-button" type="button" aria-label="Next move" disabled>›</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>

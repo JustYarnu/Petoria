@@ -1,0 +1,47 @@
+name: Daily Go self-play
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  train-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m unittest discover -s python -p 'test_*.py'
+
+      - name: Train one iteration from 100 self-play games
+        run: python python/train_one_iteration.py
+
+      - name: Update the GitHub Pages replay
+        run: python python/update_frontend.py
+
+      - name: Commit model and replay
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add python/checkpoint.pt python/latest_game.json game.json
+          if git diff --cached --quiet; then
+            echo "No generated files changed."
+            exit 0
+          fi
+          git commit -m "Update daily Go self-play"
+          git push
